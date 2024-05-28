@@ -7,6 +7,7 @@ global wins, comp, main, deaths, KeepGoing, box_x, box_y
 pygame.init()
 
 KeepGoing = True
+winning = False
 deaths = 0
 wins = 0
 main = 1
@@ -28,8 +29,10 @@ def check_key():
 
     if keystate[pygame.locals.K_ESCAPE]:
         main = 1
+
+
 def main_seq():
-    global main, KeepGoing, winning, deaths,wins
+    global main, KeepGoing, winning, deaths, wins
 
     pygame.init()
 
@@ -81,15 +84,15 @@ def main_seq():
         bar = bar.convert()
         bar.fill(color)
     
-        screen.blit(background, (0,0))
+        screen.blit(background, (0, 0))
         screen.blit(bar, (180, 200))
         screen.blit(label, (200, 220))
         pygame.display.flip()
-    
-def winning_game():
-    
-    global winning, comp, main, deaths, box_y, KeepGoing
 
+
+def winning_game():
+    global winning, comp, main, deaths, box_y, KeepGoing, rand_1
+    rand_1 = random.randrange(1, 5)
     #Display configuration
     screen = pygame.display.set_mode((640,480))
     pygame.display.set_caption("Hello, world!")
@@ -117,7 +120,7 @@ def winning_game():
     
     bounce = True
     
-    text = "Computer: "+ str(deaths) + " User: " + str(wins)
+    text = "Computer: " + str(deaths) + " User: " + str(wins)
     myFont = pygame.font.SysFont("Comic SansMS", 12)
     label = myFont.render(text, 1, (255,255,0))
     #Assign values to key variables
@@ -185,9 +188,9 @@ def winning_game():
         speed = [6, -6]
     
         if pong_x > 350 and pong_y <= random.randrange(1, 480):
-            rand = random.randrange(1, 5)
+            rand_1 = random.randrange(1, 5)
         
-        if rand == 3:
+        if rand_1 == 3:
            counter = -5
         
         if pong_x < 300:
@@ -242,7 +245,8 @@ def winning_game():
     screen.blit(paddle, (paddle_x,paddle_y))
     screen.blit(pong_blit, (pong_x, pong_y))
     pygame.display.flip()
-    
+
+
 def game():
     global deaths, wins, comp, main, KeepGoing
     
@@ -260,7 +264,7 @@ def game():
         elif main == 1:
             main_seq()
         winning_game()
-        
+
+
 if __name__ == "__main__":
-    
     game()
